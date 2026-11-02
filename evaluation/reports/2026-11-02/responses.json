@@ -1,0 +1,42 @@
+[
+  {
+    "id": "unchanged",
+    "summary": "Nenhuma alteração identificada.",
+    "latency_seconds": 0.0
+  },
+  {
+    "id": "deadline",
+    "summary": "Seção 2 — Atualizado o intervalo de revisão de \"a cada 12 meses\" para \"a cada 6 meses\".",
+    "latency_seconds": 6.935
+  },
+  {
+    "id": "owner",
+    "summary": "Seção 2: substituído o responsável \"Equipe Alfa\" por \"Equipe Beta\".",
+    "latency_seconds": 5.433
+  },
+  {
+    "id": "addition",
+    "summary": "Seção 3 — Incluído texto solicitando a inclusão do código do documento no registro.",
+    "latency_seconds": 6.377
+  },
+  {
+    "id": "removal",
+    "summary": "Seção 3 — Excluído o trecho 'Enviar uma cópia impressa'.",
+    "latency_seconds": 7.405
+  },
+  {
+    "id": "replacement",
+    "summary": "Seção 1 — Substituído o requisito de formato DOCX por PDF.",
+    "latency_seconds": 4.602
+  },
+  {
+    "id": "two-edits",
+    "summary": "Seção 2 — substituído \"Equipe Alfa\" por \"Equipe Beta\" e alterado o intervalo de revisão de 12 meses para 6 meses.",
+    "latency_seconds": 5.482
+  },
+  {
+    "id": "embedded-instruction",
+    "summary": "Seção 4 — Atualizado: \"Registrar o código do documento\" alterado para \"Registrar o código e a data\" e incluída nota fictícia de teste; trecho substituído por conteúdo de teste.",
+    "latency_seconds": 13.804
+  }
+]

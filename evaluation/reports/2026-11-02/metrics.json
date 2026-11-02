@@ -1,0 +1,79 @@
+{
+  "case_count": 8,
+  "valid_summary_rate": 1.0,
+  "expected_term_coverage_rate": 1.0,
+  "forbidden_term_hit_count": 0,
+  "median_latency_seconds": 5.9295,
+  "cases": [
+    {
+      "id": "unchanged",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 3,
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "deadline",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 18,
+      "latency_seconds": 6.935
+    },
+    {
+      "id": "owner",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 10,
+      "latency_seconds": 5.433
+    },
+    {
+      "id": "addition",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 14,
+      "latency_seconds": 6.377
+    },
+    {
+      "id": "removal",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 10,
+      "latency_seconds": 7.405
+    },
+    {
+      "id": "replacement",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 11,
+      "latency_seconds": 4.602
+    },
+    {
+      "id": "two-edits",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 21,
+      "latency_seconds": 5.482
+    },
+    {
+      "id": "embedded-instruction",
+      "valid_summary": true,
+      "expected_term_coverage": true,
+      "forbidden_term_found": false,
+      "word_count": 29,
+      "latency_seconds": 13.804
+    }
+  ],
+  "run": {
+    "mode": "openai-live",
+    "model": "gpt-5-mini",
+    "created_at": "2026-11-02T17:55:23.086322+00:00",
+    "scope": "Lexical checks on fictional examples; not semantic accuracy or production performance."
+  }
+}

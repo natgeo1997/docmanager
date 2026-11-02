@@ -2,6 +2,10 @@
 
 Eight fictional before/after pairs exercise unchanged content, a deadline, a responsible team, additions, removals, format replacement, two simultaneous edits and one embedded instruction. This is a small development fixture, not a representative or independently labelled benchmark.
 
+## Recorded run
+
+[2 November 2026: captured responses, measured checks and assistant review](reports/2026-11-02/README.md). All eight cases passed the lexical checks; one summary has a precision concern documented in the review. These are not semantic-accuracy results.
+
 ## Run
 
 ```bash

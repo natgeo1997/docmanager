@@ -96,7 +96,7 @@ npm run build
 
 ## Model evaluation
 
-The [evaluation protocol](evaluation/README.md) contains eight fictional before/after pairs, a runner using the actual summary-generation path, lexical checks and a human-review form. A separate opt-in workflow can capture OpenAI responses using a repository secret. Automated checks are limited proxies; they do not establish semantic accuracy. See the [evaluation runs](https://github.com/natgeo1997/docmanager/actions/workflows/evaluate.yml) for execution status and downloadable results.
+The [evaluation protocol](evaluation/README.md) contains eight fictional before/after pairs, a runner using the actual summary-generation path, lexical checks and a human-review form. A separate opt-in workflow can capture OpenAI responses using a repository secret. Automated checks are limited proxies; they do not establish semantic accuracy. The [recorded evaluation](evaluation/reports/2026-11-02/README.md) includes real responses, measured checks and a documented precision concern. See the [evaluation runs](https://github.com/natgeo1997/docmanager/actions/workflows/evaluate.yml) for execution status and downloadable results.
 
 To build the browser-only mode locally:
 
