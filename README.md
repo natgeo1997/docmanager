@@ -1,4 +1,4 @@
-# DocManager — Intelligent Document Management
+# DocManager - Intelligent Document Management
 
 Protótipo funcional de gestão documental com comparação de versões e geração assistida por inteligência artificial de históricos de alteração.
 
