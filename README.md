@@ -1,103 +1,97 @@
 # DocManager
 
-**Gestão documental, comparação de versões e inteligência artificial em uma aplicação web.**
+**AI-assisted document review, version comparison and change history.**
 
-O DocManager é um protótipo funcional que desenvolvi para explorar como a tecnologia pode simplificar processos de revisão e controle de documentos. A proposta é reunir edição, comparação de versões e elaboração do histórico de alterações em um único ambiente, com apoio de IA e validação humana.
+[![CI](https://github.com/natgeo1997/docmanager/actions/workflows/ci.yml/badge.svg)](https://github.com/natgeo1997/docmanager/actions/workflows/ci.yml)
 
-## O que a aplicação faz
+## Problem and approach
 
-| Funcionalidade | Descrição |
-| --- | --- |
-| **Dashboard** | Visão geral de documentos, status e próximas revisões. |
-| **Editor integrado** | Edição de conteúdo e salvamento local de rascunhos. |
-| **Comparação de versões** | Destaque visual dos blocos de texto adicionados e removidos. |
-| **Histórico com IA** | Sugestão de descrição das mudanças, baseada nas versões anterior e atual. |
-| **Revisão humana** | O usuário pode conferir e editar o resumo antes de inseri-lo na tabela do documento. |
-| **Publicação de teste** | Simulação local de atualização da versão publicada. |
+Document review involves comparing drafts, describing changes and keeping the reviewer in control. DocManager explores this workflow in a web prototype: edit a sample document, compare versions, request a suggested change-history entry and review it before insertion.
 
-## Demonstração
+## Features
+
+- Dashboard with sample documents, status and upcoming review dates.
+- Integrated editor with browser-local drafts.
+- Visual comparison of added and removed text blocks.
+- AI-assisted change-history suggestions based on before/after text.
+- Human review and editing before inserting the suggestion into the history table.
+- Simulated publication of the draft.
+
+## Demonstration — no installation required
+
+These are actual screenshots of the prototype. They demonstrate the interface; they are not a hosted application.
 
 ### Dashboard
+![DocManager dashboard](docs%202/images/dashboard.png)
 
-Visão geral da gestão documental, com documentos, status e próximas revisões.
+### AI-assisted change history
+![Suggested change-history entry awaiting human review](docs%202/images/historico-ia.png)
 
-![Dashboard do DocManager](docs%202/images/dashboard.png)
+### Version comparison
+![Added and removed text in the version comparison](docs%202/images/comparacao-versoes.png)
 
-### Histórico de alterações com IA
+## Architecture and decisions
 
-O editor apresenta a sugestão de histórico para revisão humana antes da inserção no documento.
-
-![Histórico de alterações no DocManager](docs%202/images/historico-ia.png)
-
-### Comparação de versões
-
-Comparação visual entre versão publicada e rascunho, destacando textos adicionados e removidos.
-
-![Comparação de versões do DocManager](docs%202/images/comparacao-versoes.png)
-
-## Como funciona
-
-```text
-Usuário edita o documento no React
-              ↓
-Compara a versão publicada com o rascunho
-              ↓
-React envia os textos ao FastAPI (HTTP/JSON)
-              ↓
-FastAPI consulta a API da OpenAI
-              ↓
-O resumo retorna para revisão humana
-              ↓
-Usuário decide inserir na tabela de histórico
+```mermaid
+flowchart LR
+    A[React editor and comparison] -->|Before and after text| B[FastAPI backend]
+    B --> C[OpenAI API]
+    C --> B
+    B --> D[Suggested change history]
+    D --> E[Human review and insertion]
+    A <--> F[Browser localStorage]
 ```
 
-**O cuidado central do projeto:** a IA recebe instruções para relatar apenas alterações identificadas nos textos, sem acrescentar consequências presumidas. Como modelos de IA podem falhar, a sugestão permanece sujeita à validação do usuário.
+- **React / JavaScript / Vite / CSS:** editing, comparison and interface.
+- **Python / FastAPI:** input validation and model integration. The API key stays in the backend.
+- **OpenAI API:** generates a short change description. Instructions restrict it to observed textual changes; this is a prompt constraint, not a guarantee of factual accuracy.
+- **Validation:** identical trimmed texts skip the model call. Incomplete responses, empty summaries and summaries without terminal punctuation are rejected. These checks do not establish semantic correctness.
+- **Failure handling:** authentication, quota, connection and provider failures return controlled HTTP errors. The client uses a timeout and limited retries.
+- **Human control:** the reviewer can edit the suggestion before adding it to the document.
 
-## Tecnologias
+## Run locally
 
-- **React + JavaScript:** interface, editor e comparação de versões
-- **CSS:** identidade visual e formatação dos documentos
-- **Vite:** ambiente de desenvolvimento frontend
-- **Python + FastAPI:** API própria e integração entre frontend e IA
-- **OpenAI API:** análise e sugestão de histórico de alterações
-- **localStorage:** armazenamento demonstrativo no navegador
+Requirements: Node.js 22 and Python 3.11 are used in CI. Python 3.10+ is supported by the application.
 
-## Executar localmente
+```bash
+# From the repository root
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r backend/requirements.txt
+cp backend/.env.example backend/.env
+```
 
-Requisitos: **Node.js** e **Python 3.10+**.
-
-**1. Backend**
+Set your own `OPENAI_API_KEY` in `backend/.env`; `OPENAI_MODEL` is optional (see the example file). Never commit a real key.
 
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Crie o arquivo `backend/.env` a partir de `backend/.env.example` e configure sua própria chave da OpenAI. **Nunca faça commit de chaves reais.**
-
-```bash
 python -m uvicorn main:app --reload --port 8000
 ```
 
-Documentação interativa da API: [localhost:8000/docs](http://localhost:8000/docs).
-
-**2. Frontend** (em outro terminal, na raiz do projeto)
+In a second terminal, from the repository root:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Acesse [localhost:5173](http://localhost:5173).
+Open [http://localhost:5173](http://localhost:5173). API documentation: [http://localhost:8000/docs](http://localhost:8000/docs).
 
-## Sobre o estágio atual
+The interface and local editing can be explored without an API key; generating an AI suggestion requires a configured key and provider access. Before/after text is sent to OpenAI when a suggestion is requested.
 
-Este é um **protótipo**, não uma ferramenta corporativa implantada. Os documentos demonstrativos e rascunhos são gerenciados localmente no navegador. Ainda não há autenticação, banco de dados centralizado, aprovação formal nem histórico permanente e recuperável de todas as versões. O botão de publicação é exclusivamente demonstrativo.
+## Tests and continuous integration
 
-A aplicação deve ser testada com documentos fictícios. Não utilize informações sigilosas nem documentos corporativos sem autorização.
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+npm ci
+npm run build
+```
 
----
+[CI](https://github.com/natgeo1997/docmanager/actions) runs backend tests and the frontend production build on pushes and pull requests. Tests mock the provider: no API key, paid calls or real documents are needed. They cover input validation, unchanged text, response checks and error mapping. They do not evaluate model accuracy or exercise the full browser editing workflow.
 
-**Foco do projeto:** aplicar desenvolvimento de software e IA a desafios reais de gestão, melhoria de processos e transformação digital.
+## Current limitations
+
+This is a demonstration prototype, not a deployed corporate document-control system. Documents and drafts are stored locally in the browser. There is no authentication, central database, formal approval workflow or durable recoverable history of all versions. Publication is simulated. No measured time savings or production outcomes are claimed.
+
+Use fictional or authorized sample documents. Model suggestions can be incorrect and require human review.
