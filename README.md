@@ -1,31 +1,52 @@
-# DocManager - Intelligent Document Management
+# DocManager
 
-Protótipo funcional de gestão documental com comparação de versões e geração assistida por inteligência artificial de históricos de alteração.
+**Gestão documental, comparação de versões e inteligência artificial em uma aplicação web.**
 
-## Visão geral
+O DocManager é um protótipo funcional que desenvolvi para explorar como a tecnologia pode simplificar processos de revisão e controle de documentos. A proposta é reunir edição, comparação de versões e elaboração do histórico de alterações em um único ambiente, com apoio de IA e validação humana.
 
-O DocManager reúne um dashboard de documentos, editor de conteúdo, comparação visual entre versões e um recurso de IA que sugere um registro objetivo das alterações. A sugestão é revisada pelo usuário antes de ser inserida no histórico do documento.
+## O que a aplicação faz
 
-## Funcionalidades
+| Funcionalidade | Descrição |
+| --- | --- |
+| **Dashboard** | Visão geral de documentos, status e próximas revisões. |
+| **Editor integrado** | Edição de conteúdo e salvamento local de rascunhos. |
+| **Comparação de versões** | Destaque visual dos blocos de texto adicionados e removidos. |
+| **Histórico com IA** | Sugestão de descrição das mudanças, baseada nas versões anterior e atual. |
+| **Revisão humana** | O usuário pode conferir e editar o resumo antes de inseri-lo na tabela do documento. |
+| **Publicação de teste** | Simulação local de atualização da versão publicada. |
 
-- Dashboard e biblioteca de documentos demonstrativos
-- Edição de conteúdo e salvamento local de rascunhos
-- Comparação visual por blocos de texto (adições e remoções)
-- Resumo de alterações com OpenAI via API Python/FastAPI
-- Tabela estruturada de histórico de alterações
-- Publicação demonstrativa local
+## Como funciona
+
+```text
+Usuário edita o documento no React
+              ↓
+Compara a versão publicada com o rascunho
+              ↓
+React envia os textos ao FastAPI (HTTP/JSON)
+              ↓
+FastAPI consulta a API da OpenAI
+              ↓
+O resumo retorna para revisão humana
+              ↓
+Usuário decide inserir na tabela de histórico
+```
+
+**O cuidado central do projeto:** a IA recebe instruções para relatar apenas alterações identificadas nos textos, sem acrescentar consequências presumidas. Como modelos de IA podem falhar, a sugestão permanece sujeita à validação do usuário.
 
 ## Tecnologias
 
-**Frontend:** React, JavaScript, CSS e Vite.  
-**Backend:** Python, FastAPI e Pydantic.  
-**IA:** OpenAI API (Responses API).
+- **React + JavaScript:** interface, editor e comparação de versões
+- **CSS:** identidade visual e formatação dos documentos
+- **Vite:** ambiente de desenvolvimento frontend
+- **Python + FastAPI:** API própria e integração entre frontend e IA
+- **OpenAI API:** análise e sugestão de histórico de alterações
+- **localStorage:** armazenamento demonstrativo no navegador
 
-## Execução local
+## Executar localmente
 
-Requisitos: Node.js e Python 3.10+.
+Requisitos: **Node.js** e **Python 3.10+**.
 
-### Backend
+**1. Backend**
 
 ```bash
 cd backend
@@ -34,32 +55,29 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Crie `backend/.env` com base em `backend/.env.example`. Nunca publique sua chave.
+Crie o arquivo `backend/.env` a partir de `backend/.env.example` e configure sua própria chave da OpenAI. **Nunca faça commit de chaves reais.**
 
 ```bash
 python -m uvicorn main:app --reload --port 8000
 ```
 
-API: http://localhost:8000/docs
+Documentação interativa da API: [localhost:8000/docs](http://localhost:8000/docs).
 
-### Frontend
-
-Na raiz do projeto:
+**2. Frontend** (em outro terminal, na raiz do projeto)
 
 ```bash
 npm install
 npm run dev
 ```
 
-Acesse http://localhost:5173.
+Acesse [localhost:5173](http://localhost:5173).
 
-## Como funciona a IA
+## Sobre o estágio atual
 
-1. O usuário edita um documento.
-2. O React envia as versões anterior e atual para `POST /gerar-historico`.
-3. O FastAPI consulta a OpenAI com instruções para descrever somente alterações identificadas.
-4. O usuário revisa a sugestão antes de inseri-la no documento.
+Este é um **protótipo**, não uma ferramenta corporativa implantada. Os documentos demonstrativos e rascunhos são gerenciados localmente no navegador. Ainda não há autenticação, banco de dados centralizado, aprovação formal nem histórico permanente e recuperável de todas as versões. O botão de publicação é exclusivamente demonstrativo.
 
-## Limitações
+A aplicação deve ser testada com documentos fictícios. Não utilize informações sigilosas nem documentos corporativos sem autorização.
 
-Este repositório apresenta um protótipo, não um sistema em produção. O armazenamento é local no navegador, sem autenticação, banco centralizado, trilha permanente de auditoria ou aprovação real. O botão de publicação é demonstrativo.
+---
+
+**Foco do projeto:** aplicar desenvolvimento de software e IA a desafios reais de gestão, melhoria de processos e transformação digital.
