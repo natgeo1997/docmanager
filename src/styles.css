@@ -1368,3 +1368,5 @@ td {
     grid-column: span 1;
   }
 }
+
+.demoBanner{position:fixed;top:0;left:0;right:0;z-index:99999;background:#132b3b;color:white;padding:10px 20px;font:13px/1.5 system-ui}.demoBanner a{color:#9ee0cd}.shell:has(.demoBanner){padding-top:58px}.shell:has(.demoBanner) .sidebar{top:58px}.shell:has(.demoBanner) .editorOverlay{top:58px}

@@ -1,0 +1,32 @@
+name: Evaluate OpenAI summaries
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'evaluation/**'
+      - '.github/workflows/evaluate.yml'
+permissions:
+  contents: read
+jobs:
+  evaluate:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[run-openai-evaluation]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m pip install -r backend/requirements.txt
+      - name: Evaluate eight fictional text pairs
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5-mini
+        run: python evaluation/run.py --live --output evaluation/results/live
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openai-evaluation
+          path: evaluation/results/live/
+          retention-days: 14

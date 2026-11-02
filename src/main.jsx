@@ -45,6 +45,7 @@ import "./styles.css";
 // ========================================
 
 const API_URL = "http://localhost:8000";
+const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === "true";
 
 const getToday = () => {
   const date = new Date();
@@ -437,6 +438,14 @@ function App() {
     ) {
       setRevisionSummary(
         "Nenhuma alteração de conteúdo identificada."
+      );
+      return;
+    }
+
+    if (DEMO_MODE) {
+      saveDraft();
+      setRevisionSummary(
+        `Exemplo local (sem IA): ${changes.added.length} bloco(s) incluído(s) e ${changes.removed.length} bloco(s) removido(s). Revise e descreva a mudança antes de inserir.`
       );
       return;
     }
@@ -869,6 +878,9 @@ function App() {
 
   return (
     <div className="shell">
+      {DEMO_MODE && <div className="demoBanner" role="note">
+        <a href="/">← Portfolio demos</a> · Demonstração local, sem IA ou chamadas de API. Dados fictícios; rascunhos ficam neste navegador.
+      </div>}
       <aside className="sidebar">
         <div className="brand">
           <FileText size={33} />
@@ -1682,7 +1694,7 @@ function App() {
 
                 {isGenerating
                   ? "Analisando alterações..."
-                  : "Gerar sugestão de histórico"}
+                  : DEMO_MODE ? "Gerar resumo local (sem IA)" : "Gerar sugestão de histórico"}
               </button>
 
               <label>Resumo das alterações</label>
@@ -1727,7 +1739,7 @@ function App() {
               })()}
 
               <small>
-                Resumo gerado pela OpenAI via FastAPI.
+                {DEMO_MODE ? "Resumo local demonstrativo, sem IA." : "Resumo gerado pela OpenAI via FastAPI."}
                 Revise antes de inserir. Rascunhos
                 salvos neste navegador; publicação
                 demonstrativa.

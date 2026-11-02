@@ -19,7 +19,11 @@ Document review involves comparing drafts, describing changes and keeping the re
 
 ## Demonstration — no installation required
 
-These are actual screenshots of the prototype. They demonstrate the interface; they are not a hosted application.
+[**Try the interactive browser demo →**](https://natalia-practical-ai-demos.natygeo.chatgpt.site/docmanager/index.html)
+
+The hosted demo uses the original React interface in browser-only mode. Edit, compare and save fictional drafts locally. Its summary counts changed text blocks; it does not call OpenAI. The full local application retains the OpenAI integration.
+
+These are actual screenshots of the prototype:
 
 ### Dashboard
 ![DocManager dashboard](docs%202/images/dashboard.png)
@@ -89,6 +93,16 @@ npm run build
 ```
 
 [CI](https://github.com/natgeo1997/docmanager/actions) runs backend tests and the frontend production build on pushes and pull requests. Tests mock the provider: no API key, paid calls or real documents are needed. They cover input validation, unchanged text, response checks and error mapping. They do not evaluate model accuracy or exercise the full browser editing workflow.
+
+## Model evaluation
+
+The [evaluation protocol](evaluation/README.md) contains eight fictional before/after pairs, a runner using the actual summary-generation path, lexical checks and a human-review form. A separate opt-in workflow can capture OpenAI responses using a repository secret. Automated checks are limited proxies; they do not establish semantic accuracy. See the [evaluation runs](https://github.com/natgeo1997/docmanager/actions/workflows/evaluate.yml) for execution status and downloadable results.
+
+To build the browser-only mode locally:
+
+```bash
+VITE_DEMO_MODE=true npm run build -- --base=/docmanager/
+```
 
 ## Current limitations
 
