@@ -15,6 +15,26 @@ O DocManager é um protótipo funcional que desenvolvi para explorar como a tecn
 | **Revisão humana** | O usuário pode conferir e editar o resumo antes de inseri-lo na tabela do documento. |
 | **Publicação de teste** | Simulação local de atualização da versão publicada. |
 
+## Demonstração
+
+### Dashboard
+
+Visão geral da gestão documental, com documentos, status e próximas revisões.
+
+![Dashboard do DocManager](docs/images/dashboard.png)
+
+### Histórico de alterações com IA
+
+O editor apresenta a sugestão de histórico para revisão humana antes da inserção no documento.
+
+![Histórico de alterações no DocManager](docs/images/historico-ia.png)
+
+### Comparação de versões
+
+Comparação visual entre versão publicada e rascunho, destacando textos adicionados e removidos.
+
+![Comparação de versões do DocManager](docs/images/comparacao-versoes.png)
+
 ## Como funciona
 
 ```text
